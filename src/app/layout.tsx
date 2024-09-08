@@ -16,11 +16,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: dark
-      }}
-    >
+    <ClerkProvider>
+
       <html lang="en">
         <body className={`${inter.className}  antialiased`}>
           <main>
@@ -28,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
         </body>
       </html>
+
     </ClerkProvider>
   );
 }

@@ -1,8 +1,12 @@
+import Link from 'next/link'
 import React from 'react'
 
 function HomePage() {
     return (
-        <div>HomePage</div>
+        <>
+            <div>HomePage</div>
+            <Link href="/">Home link</Link>
+        </>
     )
 }
 

@@ -48,10 +48,10 @@ export default function Home() {
         </header>
         <section className="max-w-7xl mx-auto">
           <main className="flex-1">
-            <div className="container grid gap-12 md:grid-cols-[1fr_300px] py-8">
+            <h2 className="text-2xl font-bold my-4 w-full flex-grow">Featured Album</h2>
+            <div className="container grid gap-12 md:grid-cols-[1fr_300px] pb-8">
               <div className="space-y-8">
                 <section>
-                  <h2 className="text-2xl font-bold mb-4 w-full flex-grow">Featured Album</h2>
                   <Card className="overflow-hidden">
                     <div className="aspect-video relative">
                       <img

@@ -1,12 +1,12 @@
 import { AlbumIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export function Header() {
     return (
         <header className="sticky top-0 z-10 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-14 items-center max-w-7xl mx-auto">
+            <div className="container flex h-14 items-center lg:max-w-7xl mx-auto">
                 <Link href="/" className="flex items-center space-x-2">
                     <AlbumIcon className="h-6 w-6" />
                     <span className="font-bold">The Record</span>

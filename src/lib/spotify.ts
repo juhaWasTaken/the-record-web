@@ -1,46 +1,40 @@
-const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
-const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_TOKEN;
+const { SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REFRESH_TOKEN } = process.env;
+const basicEncoded = Buffer.from(`${SPOTIFY_CLIENT_ID}:${SPOTIFY_CLIENT_SECRET}`).toString('base64');
+const tokenEndpoint = 'https://accounts.spotify.com/api/token';
+const baseEndpoint = 'https://api.spotify.com/v1';
 
-let accessToken: string | null = null;
+export const getAccessToken = async () => {
+    const params = new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: SPOTIFY_REFRESH_TOKEN,
+    });
 
-async function getAccessToken() {
-    if (accessToken) return accessToken;
+    const body = params.toString();
 
-    const response = await fetch('https://accounts.spotify.com/api/token', {
+    const response = await fetch(tokenEndpoint, {
         method: 'POST',
         headers: {
+            Authorization: `Basic ${basicEncoded}`,
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + btoa(CLIENT_ID + ':' + CLIENT_SECRET)
         },
-        body: 'grant_type=client_credentials'
+        body,
     });
 
-    const data = await response.json();
-    accessToken = data.access_token;
-    return accessToken;
-    console.log(accessToken);
-}
-
-export async function searchAlbums(query: string) {
-    const token = await getAccessToken();
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${query}&type=album&limit=10`, {
-        headers: { 'Authorization': 'Bearer ' + token }
-    });
     return response.json();
-}
+};
 
-export async function getAlbum(id: string) {
-    const token = await getAccessToken();
-    const response = await fetch(`https://api.spotify.com/v1/albums/${id}`, {
-        headers: { 'Authorization': 'Bearer ' + token }
-    });
-    return response.json();
-}
+export const getCurrentlyListening = async () => {
+    const nowPlayingEndpoint = 'https://api.spotify.com/v1/me/player/currently-playing';
 
-export async function getNewReleases() {
-    const token = await getAccessToken();
-    const response = await fetch('https://api.spotify.com/v1/browse/new-releases?limit=6', {
-        headers: { 'Authorization': 'Bearer ' + token }
-    });
-    return response.json();
+    const { access_token: accessToken } = await getAccessToken()
+
+    if (!accessToken) {
+        return;
+    }
+
+    return fetch(nowPlayingEndpoint, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        }
+    })
 }

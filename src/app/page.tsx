@@ -4,7 +4,6 @@ import { Header } from "@/components/sections/home/Header";
 import { MainReviews } from "@/components/sections/home/Main";
 import { Footer } from "@/components/sections/home/Footer";
 import { useEffect, useState } from "react";
-import { getAlbum, getNewReleases, searchAlbums } from "@/lib/spotify";
 
 export default function Home() {
   // const [featuredAlbum, setFeaturedAlbum] = useState(null)
@@ -52,6 +51,8 @@ export default function Home() {
   // if (error) {
   //   return <div className="flex items-center justify-center h-screen text-red-500">{error}</div>
   // }
+
+  
 
   
 
